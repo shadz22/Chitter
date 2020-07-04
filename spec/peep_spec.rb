@@ -11,9 +11,18 @@ describe Peep do
       connection.exec("INSERT INTO peeps (peep) VALUES ('This is the second one');")
 
       peeps = Peep.all
-      
+
       expect(peeps).to include('My first peep')
       expect(peeps).to include('This is the second one')
     end
   end
+
+  describe '.create' do
+    it 'creates new peeps' do
+      Peep.create(message: "Test creating a peep")
+
+      expect(Peep.all).to include("Test creating a peep")
+    end
+  end
+
 end

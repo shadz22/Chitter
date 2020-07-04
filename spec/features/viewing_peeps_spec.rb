@@ -5,8 +5,8 @@ feature 'Viewing peeps' do
   scenario 'see all the peeps' do
     connection = PG.connect(dbname: 'chitter_test')
 
-    connection.exec("INSERT INTO peeps VALUES(1, 'My first peep');")
-    connection.exec("INSERT INTO peeps VALUES(2, 'This is the second one');")
+    Peep.create(message: 'My first peep')
+    Peep.create(message: 'This is the second one')
 
     visit '/peeps'
 

@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require_relative './lib/peep'
 
 class Chitter < Sinatra::Base
 
@@ -16,7 +17,7 @@ class Chitter < Sinatra::Base
   end
 
   post '/peeps' do
-    # Peep.create(message: params[:peep])
+    Peep.create(message: params[:peep])
     redirect '/peeps'
   end
 
