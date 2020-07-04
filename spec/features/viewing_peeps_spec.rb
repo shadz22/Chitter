@@ -1,6 +1,3 @@
-require_relative './../spec_helper'
-require 'pg'
-
 feature 'Viewing peeps' do
   scenario 'see all the peeps' do
     connection = PG.connect(dbname: 'chitter_test')

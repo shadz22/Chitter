@@ -1,5 +1,3 @@
-require_relative './../spec_helper'
-
 feature 'Post a peep' do
   scenario 'User posts a peep' do
 
