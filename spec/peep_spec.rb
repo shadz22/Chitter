@@ -19,9 +19,11 @@ describe Peep do
 
   describe '.create' do
     it 'creates new peeps' do
-      Peep.create(message: "Test creating a peep")
+      
+      peep = Peep.create(message: "Test creating a peep")
 
       expect(Peep.all).to include("Test creating a peep")
+      expect(peep.text).to eq "Test creating a peep"
     end
   end
 

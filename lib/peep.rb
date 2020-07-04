@@ -1,26 +1,23 @@
 require 'pg'
+require_relative './database_connection'
 
 class Peep
 
-  def self.all
-    if ENV['ENVIRONMENT'] = 'test'
-      connection = PG.connect(dbname: 'chitter_test')
-    else
-      connection = PG.connect(dbname: 'chitter')
-    end
+  attr_reader :id, :text
+  
+  def initialize(id:, text:)
+    @id = id
+    @text = text
+  end
 
-    result = connection.exec("SELECT * FROM peeps")
+  def self.all
+    result = DatabaseConnection.query(("SELECT * FROM peeps"))
     result.map { |peep|  peep['peep'] }
   end
 
   def self.create(message:)
-    if ENV['ENVIRONMENT'] = 'test'
-      connection = PG.connect(dbname: 'chitter_test')
-    else
-      connection = PG.connect(dbname: 'chitter')
-    end
-
-    connection.exec("INSERT INTO peeps (peep) VALUES ('#{message}');")
+    result = DatabaseConnection.query("INSERT INTO peeps (peep) VALUES ('#{message}') RETURNING id, peep;")
+    Peep.new(id: result[0]['id'], text: result[0]['peep'])
   end
 
 end
