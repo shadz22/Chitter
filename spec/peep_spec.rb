@@ -1,29 +1,31 @@
 require_relative './../lib/peep'
+require_relative './database_helpers'
 require 'pg'
 
 describe Peep do
 
   describe '.all' do
     it 'returns all the peeps' do
-      connection = PG.connect(dbname: 'chitter_test')
 
-      connection.exec("INSERT INTO peeps (peep) VALUES ('My first peep');")
-      connection.exec("INSERT INTO peeps (peep) VALUES ('This is the second one');")
-
+      peep = Peep.create(message: 'My first peep')
+      Peep.create(message: 'This is the second one')
+    
       peeps = Peep.all
 
-      expect(peeps).to include('My first peep')
-      expect(peeps).to include('This is the second one')
+      expect(peeps.length).to eq 2
+      expect(peeps.first).to be_a Peep
+      expect(peeps.first.id).to eq peep.id
+      expect(peeps.first.text).to eq peep.text
     end
   end
 
   describe '.create' do
     it 'creates new peeps' do
-      
       peep = Peep.create(message: "Test creating a peep")
+      persisted_data = persisted_data(table: 'peeps', id: peep.id)
 
-      expect(Peep.all).to include("Test creating a peep")
       expect(peep.text).to eq "Test creating a peep"
+      expect(peep.id).to eq persisted_data.first['id']
     end
   end
 

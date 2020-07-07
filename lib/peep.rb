@@ -12,7 +12,8 @@ class Peep
 
   def self.all
     result = DatabaseConnection.query(("SELECT * FROM peeps"))
-    result.map { |peep|  peep['peep'] }
+    result.map { |peep|  
+      Peep.new(id: peep['id'], text: peep['peep']) }
   end
 
   def self.create(message:)
