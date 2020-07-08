@@ -5,17 +5,16 @@ require 'pg'
 describe Peep do
 
   describe '.all' do
-    it 'returns all the peeps' do
+    it 'returns all the peeps in reverse chronological order' do
 
-      peep = Peep.create(message: 'My first peep')
+      Peep.create(message: 'My first peep')
       Peep.create(message: 'This is the second one')
     
       peeps = Peep.all
 
       expect(peeps.length).to eq 2
       expect(peeps.first).to be_a Peep
-      expect(peeps.first.id).to eq peep.id
-      expect(peeps.first.text).to eq peep.text
+      expect(peeps.first.text).to eq 'This is the second one'
     end
   end
 
@@ -34,7 +33,6 @@ describe Peep do
       peep = Peep.create(message: "Test creating a peep", timestamp: time)
 
       expect(peep.timestamp).to eq time
-     
     end
   end
 end

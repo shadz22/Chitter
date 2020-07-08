@@ -10,4 +10,10 @@ feature 'Viewing peeps' do
     expect(page).to have_content time
   end
 
+  scenario 'see the peeps in reverse chronological order' do
+    post_peep('first peep')
+    post_peep('second peep')
+    expect(first('.peep')).to have_content 'second peep'
+  end
+
 end
