@@ -5,7 +5,7 @@ require_relative './database_connection_setup'
 class Chitter < Sinatra::Base
 
   get '/' do
-    "Chitter"
+    erb :index
   end
 
   get '/peeps' do
