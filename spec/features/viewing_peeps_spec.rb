@@ -1,12 +1,13 @@
 feature 'Viewing peeps' do
   scenario 'see all the peeps' do
-    
-    Peep.create(message: 'My first peep')
-    Peep.create(message: 'This is the second one')
-
-    visit '/peeps'
-
-    expect(page).to have_content 'My first peep'
-    expect(page).to have_content 'This is the second one'
+    post_peep
+    expect(page).to have_content 'A test peep'
   end
+
+  scenario 'see the time the peep was posted' do
+    post_peep
+    time = Time.now.strftime("%d-%m-%y %H:%M")
+    expect(page).to have_content time
+  end
+
 end

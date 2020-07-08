@@ -21,12 +21,20 @@ describe Peep do
 
   describe '.create' do
     it 'creates new peeps' do
+      
       peep = Peep.create(message: "Test creating a peep")
       persisted_data = persisted_data(table: 'peeps', id: peep.id)
 
       expect(peep.text).to eq "Test creating a peep"
       expect(peep.id).to eq persisted_data.first['id']
     end
-  end
 
+    it 'adds timestamp' do
+      time = Time.now.strftime("%d-%m-%Y %H:%M")
+      peep = Peep.create(message: "Test creating a peep", timestamp: time)
+
+      expect(peep.timestamp).to eq time
+     
+    end
+  end
 end
