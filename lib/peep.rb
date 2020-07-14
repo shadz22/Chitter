@@ -18,7 +18,7 @@ class Peep
     }
   end
 
-  def self.create(message:, timestamp: Time.now.strftime("%d-%m-%Y %H:%M"))
+  def self.create(message:, timestamp: Time.now.strftime("%Y-%m-%d %H:%M"))
     result = DatabaseConnection.query("INSERT INTO peeps (peep, peep_time) VALUES ('#{message}', '#{timestamp}') RETURNING id, peep, peep_time;")
     Peep.new(id: result[0]['id'], text: result[0]['peep'], timestamp: result[0]['peep_time'])
   end
